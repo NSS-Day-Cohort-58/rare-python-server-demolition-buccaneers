@@ -1,11 +1,4 @@
 class Post():
-    """_summary_
-    Python Model for posts
-    """
-
-    # Class initializer. It has 5 custom parameters, with the
-    # special `self` parameter that every method on a class
-    # needs as the first parameter.
     def __init__(self, id, user_id, category_id, title, publication_date, image_url, content, approved):
         self.id = id
         self.user_id = user_id
@@ -15,3 +8,5 @@ class Post():
         self.image_url = image_url
         self.content = content
         self.approved = approved
+        self.user = None
+        self.category = None
