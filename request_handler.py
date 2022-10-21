@@ -89,7 +89,7 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "posts":
             new_post = create_post(post_body)
-            # Encode the new animal and send in response
+            # Encode the new post and send in response
             self.wfile.write(json.dumps(new_post).encode())
 
         self.wfile.write(response.encode())
@@ -106,14 +106,14 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         success = False
 
-        if resource == "animals":
+        if resource == "posts":
             success = update_post(id, post_body)
 
         if success:
             self._set_headers(204)
         else:
             self._set_headers(404)
-        # Encode the new animal and send in response
+        # Encode the new post and send in response
         self.wfile.write("".encode())
 
     def do_DELETE(self):
@@ -124,11 +124,11 @@ class HandleRequests(BaseHTTPRequestHandler):
         # getting a too many positional arguments error
         (resource, id) = self.parse_url(self.path)
 
-    # Delete a single animal from the list
+    # Delete a single post from the list
         if resource == "posts":
             delete_post(id)
 
-    # Encode the new animal and send in response
+    # Encode the new post and send in response
         self.wfile.write("".encode())
 
 
