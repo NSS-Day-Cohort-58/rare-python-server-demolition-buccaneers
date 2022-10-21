@@ -1,4 +1,3 @@
-import imp
 from .category import Category
 from .comment import Comment
 from .demotion_queue import Demotion_Queue
