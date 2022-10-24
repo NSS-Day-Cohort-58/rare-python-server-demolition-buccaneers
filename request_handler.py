@@ -1,6 +1,8 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-from views import get_all_posts, get_single_post, create_post, update_post, delete_post
+from views import get_all_posts
+from views import get_all_categories, get_single_category, delete_category, update_category
+from views import get_all_subscriptions, get_single_subscription, create_subscription, delete_subscription, update_subscription
 from views.user_requests import create_user, login_user
 
 
