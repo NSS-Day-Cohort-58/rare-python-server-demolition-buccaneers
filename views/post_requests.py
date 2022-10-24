@@ -84,7 +84,7 @@ def get_single_post(id):
             a.image_url,
             a.content,
             a.approved
-        FROM post a
+        FROM Posts a
         WHERE a.id = ?
         """, (id, ))
 
@@ -104,7 +104,7 @@ def create_post(new_post):
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
-        INSERT INTO post
+        INSERT INTO Posts
             ( user_id, category_id, title, publication_date, image_url, content, approved )
         VALUES
             ( ?, ?, ?, ?, ?, ?, ?);
@@ -130,7 +130,7 @@ def delete_post(id):
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
-        DELETE FROM post
+        DELETE FROM Posts
         WHERE id = ?
         """, (id, ))
 
@@ -140,7 +140,7 @@ def update_post(id, new_post):
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
-        UPDATE post
+        UPDATE Posts
             SET
                 user_id = ?,
                 category_id = ?,
@@ -150,9 +150,8 @@ def update_post(id, new_post):
                 content = ?,
                 approved = ?
         WHERE id = ?
-        """, (new_post['name'], new_post['breed'],
-              new_post['status'], new_post['locationId'],
-              new_post['customerId'], id, ))
+        """, (new_post['user_id'], new_post['category_id'],
+              new_post['title'], new_post['publication_date'], id, ))
 
         # Were any rows affected?
         # Did the client send an `id` that exists?
