@@ -1,5 +1,8 @@
 # ========== CATEGORY REQUEST =========
 from .category_requests import get_all_categories
+from .category_requests import get_single_category
+from .category_requests import delete_category
+from .category_requests import update_category
 
 # ========== COMMENT REQUEST ==========
 from .comment_requests import get_all_comments
@@ -18,6 +21,10 @@ from .reaction_requests import get_all_reactions
 
 # ========== SUBSCRIPTION REQUEST =========
 from .subscription_requests import get_all_subscriptions
+from .subscription_requests import get_single_subscription
+from .subscription_requests import create_subscription
+from .subscription_requests import delete_subscription
+from .subscription_requests import update_subscription
 
 # ========== TAG REQUEST =========
 from .tag_requests import get_all_tags
