@@ -4,7 +4,8 @@ from models import Subscription
 
 SUBSCRIPTIONS = [
     # ? Test data for subscription
-    {"id": 1, "follower_id": 1, "author_id": 1, "created_on": 1666627368, "user": 1}
+    {"id": 1, "follower_id": 1, "author_id": 1,
+        "created_on": 1666627368, "user": 1}
 ]
 
 
