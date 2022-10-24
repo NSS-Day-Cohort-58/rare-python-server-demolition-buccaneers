@@ -2,53 +2,6 @@ import sqlite3
 import json
 from models import Post, User, Category
 
-POSTS = [
-    {
-        # Test data for posts
-        "id": 1,
-        "user_id": 1,
-        "category_id": 1,
-        "title": "test 1",
-        # need to check if the publication date is correct
-        "publication_date": 4,
-        "image_url": "https://www.theedadvocate.org/wp-content/uploads/2016/02/board-361516_960_720-660x400.jpg",
-        "content": "test content 1",
-        # need to check if this is the correct way to
-        # have a boolean in this object
-        "approved": "true"
-
-    },
-    {
-        # Test data for posts
-        "id": 2,
-        "user_id": 1,
-        "category_id": 1,
-        "title": "test 2",
-        # need to check if the publication date is correct
-        "publication_date": 4,
-        "image_url": "https://www.theedadvocate.org/wp-content/uploads/2016/02/board-361516_960_720-660x400.jpg",
-        "content": "test content 1",
-        # need to check if this is the correct way to
-        # have a boolean in this object
-        "approved": "true"
-    },
-    {
-        # Test data for posts
-        "id": 3,
-        "user_id": 1,
-        "category_id": 1,
-        "title": "Test 3",
-        # need to check if the publication date is correct
-        "publication_date": 4,
-        "image_url": "https://www.theedadvocate.org/wp-content/uploads/2016/02/board-361516_960_720-660x400.jpg",
-        "content": "test content 1",
-        # need to check if this is the correct way to
-        # have a boolean in this object
-        "approved": "true"
-
-    }
-]
-
 
 def get_all_posts():
     # Open a connection to the database
@@ -98,12 +51,12 @@ def get_all_posts():
             # Create an post instance from the current row
             post = Post(row['id'], row['user_id'], row['category_id'], row['title'],
                         row['publication_date'], row['image_url'], row['content'], row['approved'])
-            
-            #Create a Users and Categories instance from the current row
+
+            # Create a Users and Categories instance from the current row
             user = User(row['id'], row['first_name'], row['last_name'], row['email'],
                         row['bio'], row['username'], row['password'], row['profile_image_url'],
                         row['created_on'], row['active'])
-            
+
             category = Category(row['id'], row['label'])
 
             # Add the dictionary representation of the post to the list
