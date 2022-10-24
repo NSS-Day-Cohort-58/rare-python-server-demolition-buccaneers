@@ -7,6 +7,5 @@ from .reaction_requests import get_all_reactions
 from .subscription_requests import get_all_subscriptions
 from .tag_requests import get_all_tags
 from .user_requests import login_user, create_user
-from .post_requests import get_all_posts 
+from .post_requests import get_all_posts, get_single_post, create_post, update_post, delete_post
 #get_single_post, create_post, update_post, delete_post
-

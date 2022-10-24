@@ -2,52 +2,52 @@ import sqlite3
 import json
 from models import Post
 
-POSTS = [
-    {
-        # Test data for posts
-        "id": 1,
-        "user_id": 1,
-        "category_id": 1,
-        "title": "test 1",
-        # need to check if the publication date is correct
-        "publication_date": 4,
-        "image_url": "https://www.theedadvocate.org/wp-content/uploads/2016/02/board-361516_960_720-660x400.jpg",
-        "content": "test content 1",
-        # need to check if this is the correct way to
-        # have a boolean in this object
-        "approved": "true"
+# POSTS = [ #unnessessary at this point in the coding process
+#     {
+#         # Test data for posts
+#         "id": 1,
+#         "user_id": 1,
+#         "category_id": 1,
+#         "title": "test 1",
+#         # need to check if the publication date is correct
+#         "publication_date": 4,
+#         "image_url": "https://www.theedadvocate.org/wp-content/uploads/2016/02/board-361516_960_720-660x400.jpg",
+#         "content": "test content 1",
+#         # need to check if this is the correct way to
+#         # have a boolean in this object
+#         "approved": "true"
 
-    },
-    {
-        # Test data for posts
-        "id": 2,
-        "user_id": 1,
-        "category_id": 1,
-        "title": "test 2",
-        # need to check if the publication date is correct
-        "publication_date": 4,
-        "image_url": "https://www.theedadvocate.org/wp-content/uploads/2016/02/board-361516_960_720-660x400.jpg",
-        "content": "test content 1",
-        # need to check if this is the correct way to
-        # have a boolean in this object
-        "approved": "true"
-    },
-    {
-        # Test data for posts
-        "id": 3,
-        "user_id": 1,
-        "category_id": 1,
-        "title": "Test 3",
-        # need to check if the publication date is correct
-        "publication_date": 4,
-        "image_url": "https://www.theedadvocate.org/wp-content/uploads/2016/02/board-361516_960_720-660x400.jpg",
-        "content": "test content 1",
-        # need to check if this is the correct way to
-        # have a boolean in this object
-        "approved": "true"
+#     },
+#     {
+#         # Test data for posts
+#         "id": 2,
+#         "user_id": 1,
+#         "category_id": 1,
+#         "title": "test 2",
+#         # need to check if the publication date is correct
+#         "publication_date": 4,
+#         "image_url": "https://www.theedadvocate.org/wp-content/uploads/2016/02/board-361516_960_720-660x400.jpg",
+#         "content": "test content 1",
+#         # need to check if this is the correct way to
+#         # have a boolean in this object
+#         "approved": "true"
+#     },
+#     {
+#         # Test data for posts
+#         "id": 3,
+#         "user_id": 1,
+#         "category_id": 1,
+#         "title": "Test 3",
+#         # need to check if the publication date is correct
+#         "publication_date": 4,
+#         "image_url": "https://www.theedadvocate.org/wp-content/uploads/2016/02/board-361516_960_720-660x400.jpg",
+#         "content": "test content 1",
+#         # need to check if this is the correct way to
+#         # have a boolean in this object
+#         "approved": "true"
 
-    }
-]
+#     }
+# ]
 
 
 def get_all_posts():
@@ -69,7 +69,7 @@ def get_all_posts():
             a.image_url,
             a.content,
             a.approved
-        FROM post a
+        FROM posts a
         """)
 
         # Initialize an empty list to hold all post representations
@@ -108,7 +108,7 @@ def get_single_post(id):
             a.image_url,
             a.content,
             a.approved
-        FROM post a
+        FROM posts a
         WHERE a.id = ?
         """, (id, ))
 
@@ -128,7 +128,7 @@ def create_post(new_post):
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
-        INSERT INTO post
+        INSERT INTO posts
             ( user_id, category_id, title, publication_date, image_url, content, approved )
         VALUES
             ( ?, ?, ?, ?, ?, ?, ?);
@@ -154,7 +154,7 @@ def delete_post(id):
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
-        DELETE FROM post
+        DELETE FROM posts
         WHERE id = ?
         """, (id, ))
 
@@ -164,7 +164,7 @@ def update_post(id, new_post):
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
-        UPDATE post
+        UPDATE posts
             SET
                 user_id = ?,
                 category_id = ?,
@@ -174,9 +174,9 @@ def update_post(id, new_post):
                 content = ?,
                 approved = ?
         WHERE id = ?
-        """, (new_post['name'], new_post['breed'],
-              new_post['status'], new_post['locationId'],
-              new_post['customerId'], id, ))
+        """, (new_post['user_id'], new_post['category_id'],
+              new_post['title'], new_post['publication_date'],
+              new_post['image_url'], new_post['content'], new_post['approved'], id, ))
 
         # Were any rows affected?
         # Did the client send an `id` that exists?
