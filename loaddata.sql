@@ -36,6 +36,7 @@ CREATE TABLE "Posts" (
   "content" varchar,
   "approved" bit,
   FOREIGN KEY(`user_id`) REFERENCES `Users`(`id`)
+  FOREIGN KEY(`category_id`) REFERENCES `Categories` (`id`)
 );
 CREATE TABLE "Comments" (
   "id" INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -74,12 +75,18 @@ CREATE TABLE "Categories" (
   "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "label" varchar
 );
+
+
+
 INSERT INTO Categories ('label')
 VALUES ('News');
 INSERT INTO Tags ('label')
 VALUES ('JavaScript');
 INSERT INTO Reactions ('label', 'image_url')
 VALUES ('happy', 'https://pngtree.com/so/happy');
+
+
+
 INSERT INTO Users (
     'first_name',
     'last_name',
@@ -92,7 +99,7 @@ INSERT INTO Users (
     'active'
   )
 VALUES (
-    '	Francklin',
+    'Francklin',
     'Parncutt',
     'fparncutt0@wp.com',
     'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi. Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus. Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla.',
@@ -190,6 +197,8 @@ VALUES (
     '7/28/2022',
     'true'
   );
+
+
 INSERT INTO Categories ('label')
 VALUES('Horror');
 INSERT INTO Categories ('label')
@@ -206,6 +215,9 @@ INSERT INTO Categories ('label')
 VALUES('Historical');
 INSERT INTO Categories ('label')
 VALUES('Fairy Tale');
+
+
+
 INSERT INTO Tags ('label')
 VALUES('Horror');
 INSERT INTO Tags ('label')
@@ -220,6 +232,8 @@ INSERT INTO Tags ('label')
 VALUES('Historical');
 INSERT INTO Tags ('label')
 VALUES('Fairy Tale');
+
+
 INSERT INTO Reactions ('label', 'image_url')
 VALUES('Sad', 'https://pngtree.com/so/sad')
 INSERT INTO Reactions ('label', 'image_url')
@@ -230,3 +244,55 @@ INSERT INTO Reactions ('label', 'image_url')
 VALUES('love', 'https://pngtree.com/so/love')
 INSERT INTO Reactions ('label', 'image_url')
 VALUES('wink', 'https://pngtree.com/so/wink')
+
+INSERT INTO Posts (
+    'id', 
+    'user_id', 
+    'category_id', 
+    'title', 
+    'publication_date', 
+    'image_url', 
+    'content', 
+    'approved'
+  )
+VALUES(
+    '2', 
+    '1', 
+    '5', 
+    'Chainsawman', 
+    '2022-10-24', 
+    'https://upload.wikimedia.org/wikipedia/en/2/24/Chainsawman.jpg',
+    'the show is good', 
+    'approved'
+    )
+
+SELECT
+    a.id,
+    a.user_id,
+    a.category_id,
+    a.title,
+    a.publication_date,
+    a.image_url,
+    a.content,
+    a.approved,
+    u.first_name first_name,
+    u.last_name last_name,
+    u.email email,
+    u.bio bio,
+    u.username username,
+    u.password password,
+    u.profile_image_url profile_image_url,
+    u.created_on created_on,
+    u.active active,
+    c.label category_label
+FROM Posts a
+JOIN Users u
+    ON u.id = a.user_id
+JOIN Categories c
+    ON c.id = a.category_id
+
+SELECT * FROM Users
+
+UPDATE Users
+SET first_name = 'Franklin'
+WHERE id =1
