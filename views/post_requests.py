@@ -1,6 +1,6 @@
 import sqlite3
 import json
-from models import Post
+from models import Post, User, Category
 
 # POSTS = [ #unnessessary at this point in the coding process
 #     {
@@ -68,8 +68,23 @@ def get_all_posts():
             a.publication_date,
             a.image_url,
             a.content,
-            a.approved
-        FROM posts a
+            a.approved,
+            u.first_name first_name,
+            u.last_name last_name,
+            u.email email,
+            u.bio bio,
+            u.username username,
+            u.password password,
+            u.profile_image_url profile_image_url,
+            u.created_on created_on,
+            u.active active,
+            c.label label
+        FROM Posts a
+        JOIN Users u
+            ON u.id = a.user_id
+        JOIN Categories c
+            ON c.id = a.category_id
+>>>>>>> main
         """)
 
         # Initialize an empty list to hold all post representations
@@ -85,7 +100,16 @@ def get_all_posts():
             post = Post(row['id'], row['user_id'], row['category_id'], row['title'],
                         row['publication_date'], row['image_url'], row['content'], row['approved'])
 
+            # Create a Users and Categories instance from the current row
+            user = User(row['id'], row['first_name'], row['last_name'], row['email'],
+                        row['bio'], row['username'], row['password'], row['profile_image_url'],
+                        row['created_on'], row['active'])
+
+            category = Category(row['id'], row['label'])
+
             # Add the dictionary representation of the post to the list
+            post.user = user.__dict__
+            post.category = category.__dict__
             posts.append(post.__dict__)
 
     return posts
