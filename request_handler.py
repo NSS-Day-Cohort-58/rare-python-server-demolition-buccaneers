@@ -16,7 +16,7 @@ from views import (
     update_subscription,
 )
 from views.user_requests import create_user, login_user
-from views import get_all_comments, get_comments_by_post, create_comment
+from views import get_all_comments, get_comments_by_post, create_comment, get_single_comment, delete_comment, update_comment
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -44,9 +44,10 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = get_all_posts()
             
             elif resource == "comments":
-                # if id is not None:
-                #     response = 
-                response = get_all_comments()
+                if id is not None:
+                    response = get_single_comment(id)
+                else:
+                    response = get_all_comments()
             
             elif resource == "categories":
                 response = get_all_categories()
@@ -77,21 +78,17 @@ class HandleRequests(BaseHTTPRequestHandler):
         response = ''
         resource, _ = self.parse_url(self.path)
 
-        #if resource == 'login':
-        #response = login_user(post_body)
+
         if resource == 'login':
             response = login_user(post_body)
 
-        #if resource == 'register':
-        #response = create_user(post_body)
+
         if resource == 'register':
             response = create_user(post_body)
 
             
         new_post = None
 
-        if resource == 'login':
-            response = login_user(post_body)
 
         new_comment = None 
         if resource == "comments":
@@ -103,17 +100,19 @@ class HandleRequests(BaseHTTPRequestHandler):
         if resource == 'register':
             response = create_user(post_body)
 
-        if resource == "posts":
+        elif resource == "posts":
             response = create_post(post_body)
             # Encode the new post and send in response
 
-        if resource == "subscriptions":
+        elif resource == "subscriptions":
             response = create_subscription(post_body)
-            
+
+        elif resource == "comments":
+            response = create_comment(post_body)
+
         self.wfile.write(response.encode())
 
 
-        self.wfile.write(json.dumps(new_post).encode())
 
     # ========== PUT REQUEST =========
     def do_PUT(self):
@@ -133,6 +132,10 @@ class HandleRequests(BaseHTTPRequestHandler):
             
         elif resource == "subscriptions":
             success = update_subscription(id, post_body)
+
+        elif resource == "comments":
+            success = update_comment(id, post_body)
+            
         if success:
             self._set_headers(204)
         else:
@@ -153,10 +156,15 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Delete a single post from the list
         if resource == "posts":
             delete_post(id)
+        
         elif resource == "subscriptions":
             delete_subscription(id)
-        # Encode the new post and send in response
+        
+        elif resource == "comments":
+            delete_comment(id)
         self.wfile.write("".encode())
+
+
 
     # Another method! This supports requests with the OPTIONS verb.
 

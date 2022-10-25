@@ -5,7 +5,7 @@ from .category_requests import delete_category
 from .category_requests import update_category
 
 # ========== COMMENT REQUEST ==========
-from .comment_requests import get_all_comments, get_comments_by_post, create_comment
+from .comment_requests import get_all_comments, get_comments_by_post, create_comment, get_single_comment, delete_comment, update_comment
 
 # ========== DEMOTION REQUEST =========
 from .demotion_queue_requests import get_all_demotion_queues
