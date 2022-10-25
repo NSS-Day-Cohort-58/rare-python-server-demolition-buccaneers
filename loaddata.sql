@@ -296,3 +296,101 @@ SELECT * FROM Users
 UPDATE Users
 SET first_name = 'Franklin'
 WHERE id =1
+
+
+
+INSERT INTO Subscriptions (
+    'id', 
+    'follower_id', 
+    'author_id', 
+    'created_on'
+  )
+VALUES(
+    1, 
+    2, 
+    3, 
+    1666641591
+  )
+INSERT INTO Subscriptions (
+    'id', 
+    'follower_id', 
+    'author_id', 
+    'created_on'
+  )
+VALUES(
+    2, 
+    4, 
+    5, 
+    1666641592
+  )
+INSERT INTO Subscriptions (
+    'id', 
+    'follower_id', 
+    'author_id', 
+    'created_on'
+  )
+VALUES(
+    3, 
+    6, 
+    7, 
+    1666641593
+  )
+INSERT INTO Subscriptions (
+    'id', 
+    'follower_id', 
+    'author_id', 
+    'created_on'
+  )
+VALUES(
+    4, 
+    8, 
+    9,
+    1666641594
+  )
+
+INSERT INTO Posts (
+    'id',
+    'user_id',
+    'category_id',
+    'title',
+    'publication_date',
+    'image_url',
+    'content',
+    'approved'
+  )
+VALUES(
+    '2',
+    '1',
+    '5',
+    'Chainsawman',
+    '2022-10-24',
+    'https://upload.wikimedia.org/wikipedia/en/2/24/Chainsawman.jpg',
+    'the show is good',
+    'approved'
+  )
+SELECT a.id,
+  a.user_id,
+  a.category_id,
+  a.title,
+  a.publication_date,
+  a.image_url,
+  a.content,
+  a.approved,
+  u.first_name first_name,
+  u.last_name last_name,
+  u.email email,
+  u.bio bio,
+  u.username username,
+  u.password password,
+  u.profile_image_url profile_image_url,
+  u.created_on created_on,
+  u.active active,
+  c.label category_label
+FROM Posts a
+  JOIN Users u ON u.id = a.user_id
+  JOIN Categories c ON c.id = a.category_id
+SELECT *
+FROM Users
+UPDATE Users
+SET first_name = 'Franklin'
+WHERE id = 1
