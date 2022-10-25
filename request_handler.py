@@ -51,6 +51,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         self.wfile.write(json.dumps(response).encode())
 
 
+
     #========== POST REQUEST =========
     def do_POST(self):
         """Make a post request to the server"""
@@ -78,6 +79,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         self.wfile.write(response.encode())
 
 
+        self.wfile.write(json.dumps(new_post).encode())
 
     # ========== PUT REQUEST =========
     def do_PUT(self):
@@ -103,7 +105,8 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Encode the new post and send in response
         self.wfile.write("".encode())
 
-    # ========== DELETE REQUEST =========
+# ========== DELETE REQUEST =========
+
     def do_DELETE(self):
         # Set a 204 response code
         self._set_headers(204)
@@ -121,14 +124,17 @@ class HandleRequests(BaseHTTPRequestHandler):
         self.wfile.write("".encode())
 
     # Another method! This supports requests with the OPTIONS verb.
+
     def do_OPTIONS(self):
         """Sets the OPTIONS headers"""
         self.send_response(200)
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-        self.send_header(
-            "Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept"
-        )
+
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods',
+                         'GET, POST, PUT, DELETE')
+        self.send_header('Access-Control-Allow-Headers',
+                         'X-Requested-With, Content-Type, Accept')
+
         self.end_headers()
 
     def parse_url(self, path):
