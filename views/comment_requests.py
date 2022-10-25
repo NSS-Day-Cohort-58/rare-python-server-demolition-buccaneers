@@ -96,7 +96,7 @@ def get_comments_by_post(post):
             comments.append(comment.__dict__)
     return comments
 
-def add_comment():
+def create_comment(new_comment):
     # Open a connection to the database
     with sqlite3.connect("./db.sqlite3") as conn:
 
@@ -105,19 +105,21 @@ def add_comment():
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
-        INSERT INTO Posts (
-            'id', 
-            'user_id', 
-            'category_id', 
-            'title', 
-            'publication_date', 
-            'image_url', 
-            'content', 
-            'approved'
-        VALUE
-            ?
-        """
-        
-    )
+        INSERT INTO Comments ( 
+            'post_id', 
+            'author_id', 
+            'content')
+        VALUES (?, ?, ?)
+        """, (new_comment['post_id'], new_comment['author_id'], new_comment['content'],))
+        # The `lastrowid` property on the cursor will return
+        # the primary key of the last thing that got added to
+        # the database.
+        id = db_cursor.lastrowid
 
+        # Add the `id` property to the post dictionary that
+        # was sent by the client so that the client sees the
+        # primary key in the response.
+        new_comment['id'] = id
+
+    return new_comment
 

@@ -5,7 +5,7 @@ from views import get_all_posts, get_single_post, create_post, update_post, dele
 from views import get_all_categories, get_single_category, delete_category, update_category
 from views import get_all_subscriptions, get_single_subscription, create_subscription, delete_subscription, update_subscription
 from views.user_requests import create_user, login_user
-from views import get_all_comments, get_comments_by_post
+from views import get_all_comments, get_comments_by_post, create_comment
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -65,12 +65,29 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
 
+        #if resource == 'login':
+        #response = login_user(post_body)
+        if resource == 'login':
+            response = login_user(post_body)
+
+        #if resource == 'register':
+        #response = create_user(post_body)
+        if resource == 'register':
+            response = create_user(post_body)
+
+            
         new_post = None
 
         if resource == "posts":
             new_post = create_post(post_body)
             # Encode the new post and send in response
             self.wfile.write(json.dumps(new_post).encode())
+
+        new_comment = None 
+        if resource == "comments":
+            new_comment = create_comment(post_body)
+            self.wfile.write(json.dumps(new_comment).encode())
+
 
 # ========== PUT REQUEST =========
     def do_PUT(self):
@@ -87,6 +104,7 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "posts":
             success = update_post(id, post_body)
+        
 
         if success:
             self._set_headers(204)
