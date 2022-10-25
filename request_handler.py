@@ -36,42 +36,45 @@ class HandleRequests(BaseHTTPRequestHandler):
                 # if id is not None:
                 #     response = 
                 response = get_all_comments()
+            
+            if resource == "categories":
+                response = get_all_categories()
 
 
-            else: #There is a ? in the path, run the query param functions
-                (resource, query) = parsed
+        #     else: #There is a ? in the path, run the query param functions
+        #         (resource, query) = parsed
 
-                # See if the query dictionary has a post ID
-                if query.get('post_id') and resource == 'comments':
-                    response = get_comments_by_post(query['post_id'][0])
+        #         # See if the query dictionary has a post ID
+        #         if query.get('post_id') and resource == 'comments':
+                    #response = get_comments_by_post(query['post_id'][0])
         self.wfile.write(json.dumps(response).encode())
 
 
     
 
-# ========== POST REQUEST =========
-    # def do_POST(self):
-    #     """Make a post request to the server"""
-    #     self._set_headers(201)
-    #     content_len = int(self.headers.get('content-length', 0))
-    #     post_body = json.loads(self.rfile.read(content_len))
-    #     response = ''
-    #     resource, _ = self.parse_url()
+#========== POST REQUEST =========
+    def do_POST(self):
+        """Make a post request to the server"""
+        self._set_headers(201)
+        content_len = int(self.headers.get('content-length', 0))
+        post_body = json.loads(self.rfile.read(content_len))
+        response = ''
+        resource, _ = self.parse_url(self.path)
 
-    #     new_post = None
+        new_post = None
 
-    #     if resource == 'login':
-    #         response = login_user(post_body)
+        if resource == 'login':
+            response = login_user(post_body)
 
-    #     if resource == 'register':
-    #         response = create_user(post_body)
+        if resource == 'register':
+            response = create_user(post_body)
 
-    #     if resource == "posts":
-    #         new_post = create_post(post_body)
-    #         # Encode the new post and send in response
-    #         self.wfile.write(json.dumps(new_post).encode())
+        if resource == "posts":
+            new_post = create_post(post_body)
+            # Encode the new post and send in response
+            self.wfile.write(json.dumps(new_post).encode())
 
-    #     self.wfile.write(response.encode())
+        self.wfile.write(response.encode())
 
 
 # ========== PUT REQUEST =========

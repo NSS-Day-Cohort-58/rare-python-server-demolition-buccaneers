@@ -106,14 +106,16 @@ def add_comment():
 
         db_cursor.execute("""
         INSERT INTO Posts (
-        'id', 
-        'user_id', 
-        'category_id', 
-        'title', 
-        'publication_date', 
-        'image_url', 
-        'content', 
-        'approved'
+            'id', 
+            'user_id', 
+            'category_id', 
+            'title', 
+            'publication_date', 
+            'image_url', 
+            'content', 
+            'approved'
+        VALUE
+            ?
         """
         
     )
