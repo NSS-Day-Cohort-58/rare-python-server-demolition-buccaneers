@@ -30,6 +30,10 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = get_single_post(id)
                 else:
                     response = get_all_posts()
+            
+            if resource =="subscriptions":
+                response = get_all_subscriptions()
+                
 
         self.wfile.write(json.dumps(response).encode())
 

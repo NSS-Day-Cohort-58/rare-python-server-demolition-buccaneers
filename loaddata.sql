@@ -297,6 +297,8 @@ UPDATE Users
 SET first_name = 'Franklin'
 WHERE id =1
 
+
+
 INSERT INTO Subscriptions (
     'id', 
     'follower_id', 

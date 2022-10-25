@@ -35,7 +35,7 @@ def get_all_subscriptions():
             u.password password,
             u.profile_image_url profile_image_url,
             u.created_on created_on,
-            u.active active,
+            u.active active
         FROM subscription s
         JOIN Users u
             ON u.id = s.user_id
