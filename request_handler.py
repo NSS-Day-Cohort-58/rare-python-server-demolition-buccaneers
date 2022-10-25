@@ -50,29 +50,34 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         self.wfile.write(json.dumps(response).encode())
 
-    # ========== POST REQUEST =========
-    # def do_POST(self):
-    #     """Make a post request to the server"""
-    #     self._set_headers(201)
-    #     content_len = int(self.headers.get('content-length', 0))
-    #     post_body = json.loads(self.rfile.read(content_len))
-    #     response = ''
-    #     resource, _ = self.parse_url()
 
-    #     new_post = None
+    #========== POST REQUEST =========
+    def do_POST(self):
+        """Make a post request to the server"""
+        self._set_headers(201)
+        content_len = int(self.headers.get('content-length', 0))
+        post_body = json.loads(self.rfile.read(content_len))
+        response = ''
+        resource, _ = self.parse_url(self.path)
 
-    #     if resource == 'login':
-    #         response = login_user(post_body)
+        new_post = None
 
-    #     if resource == 'register':
-    #         response = create_user(post_body)
+        if resource == 'login':
+            response = login_user(post_body)
 
-    #     if resource == "posts":
-    #         new_post = create_post(post_body)
-    #         # Encode the new post and send in response
-    #         self.wfile.write(json.dumps(new_post).encode())
+        if resource == 'register':
+            response = create_user(post_body)
 
-    #     self.wfile.write(response.encode())
+        if resource == "posts":
+            response = create_post(post_body)
+            # Encode the new post and send in response
+
+        if resource == "subscriptions":
+            response = create_subscription(post_body)
+            
+        self.wfile.write(response.encode())
+
+
 
     # ========== PUT REQUEST =========
     def do_PUT(self):
