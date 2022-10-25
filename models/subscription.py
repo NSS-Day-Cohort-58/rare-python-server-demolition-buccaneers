@@ -4,5 +4,6 @@ class Subscription():
         self.follower_id = follower_id
         self.author_id = author_id
         self.created_on = created_on
-        self.user = None
+        self.follower = None
+        self.author = None
         
