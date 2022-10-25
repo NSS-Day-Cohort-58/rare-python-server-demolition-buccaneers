@@ -1,14 +1,9 @@
 import sqlite3
 import json
-from models import Post_Tag
+from models import Post_Tag, Post, Tag
 
 
-import sqlite3
-import json
-from models import PostTag
-
-
-def get_all_posttags():
+def get_all_post_tags():
     # Open a connection to the database
     with sqlite3.connect("./db.sqlite3") as conn:
 
@@ -19,16 +14,26 @@ def get_all_posttags():
         # Write the SQL query to get the information you want
         db_cursor.execute(
             """
-                      SELECT
+                    SELECT
                         pt.id,
                         pt.post_id,
-                        pt.tag_id
-                        
-                       
-
-                    FROM PostTag pt
-                   
-                        """
+                        pt.tag_id,
+                        a.id,
+                        a.user_id,
+                        a.category_id,
+                        a.title,
+                        a.publication_date,
+                        a.image_url,
+                        a.content,
+                        a.approved,
+                        t.id,
+                        t.label
+                    FROM PostTags pt
+                    JOIN Posts a
+                        ON a.id = pt.post_id
+                    JOIN Tags t
+                        ON t.id = pt.tag_id
+            """
         )
 
         # Initialize an empty list to hold all posttag representations
@@ -40,16 +45,25 @@ def get_all_posttags():
         # Iterate list of data returned from database
         for row in dataset:
 
-            # Create an tag instance from the current row
-            posttag = PostTag(row["id"], row["post_id"], row["tag_id"])
+            # Create a Post tag instance from the current row
+            posttag = Post_Tag(row["id"], row["post_id"], row["tag_id"])
 
+            #Create a Post instance from the current row
+            post = Post(row['id'], row['user_id'], row['category_id'], row['title'],
+                        row['publication_date'], row['image_url'], row['content'], row['approved'])
+            
+            #Create a Tag instance from the current row
+            tag = Tag(row["id"], row["label"])
+            
             # Add the dictionary representation of the tag to the list
+            posttag.post = post.__dict__
+            posttag.tag = tag.__dict__
             posttags.append(posttag.__dict__)
 
     return json.dumps(posttags)
 
 
-def get_single_posttag(id):
+def get_single_post_tag(id):
     with sqlite3.connect(".db.sqlite3") as conn:
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
@@ -61,20 +75,39 @@ def get_single_posttag(id):
                     SELECT
                         pt.id,
                         pt.post_id,
-                        pt.tag_id
-                       
-                    FROM PostTag pt
+                        pt.tag_id,
+                        a.id,
+                        a.user_id,
+                        a.category_id,
+                        a.title,
+                        a.publication_date,
+                        a.image_url,
+                        a.content,
+                        a.approved,
+                        t.id,
+                        t.label
+                    FROM PostTags pt
+                    JOIN Posts a
+                        ON a.id = pt.post_id
+                    JOIN Tags t
+                        ON t.id = pt.tag_id
                     WHERE pt.id = ?
                     """,
-            (id,),
-        )
+            (id,))
 
         # Load the single result into memory
         data = db_cursor.fetchone()
 
         # Create an posttag instance from the current row
-        posttag = PostTag(data["id"], data["post_id"], data["tag_id"])
+        posttag = Post_Tag(data["id"], data["post_id"], data["tag_id"])
 
+        post = Post(data['id'], data['user_id'], data['category_id'], data['title'],
+                        data['publication_date'], data['image_url'], data['content'], data['approved'])
+        
+        tag = Tag(data["id"], data["label"])
+
+        posttag.post = post.__dict__
+        posttag.tag = tag.__dict__
         return posttag.__dict__
 
 

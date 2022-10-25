@@ -296,3 +296,39 @@ SELECT * FROM Users
 UPDATE Users
 SET first_name = 'Franklin'
 WHERE id =1
+
+
+INSERT INTO PostTags (
+  'id',
+  'post_id',
+  'tag_id')
+VALUES
+  (
+  4,
+  1,
+  4
+  )
+
+SELECT
+  pt.id,
+  pt.post_id,
+  pt.tag_id,
+  a.id,
+  a.user_id,
+  a.category_id,
+  a.title,
+  a.publication_date,
+  a.image_url,
+  a.content,
+  a.approved,
+  t.id,
+  t.label
+FROM PostTags pt
+JOIN Posts a
+  ON a.id = pt.post_id
+JOIN Tags t
+  ON t.id = pt.tag_id
+
+SELECT *
+FROM PostTags
+

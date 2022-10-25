@@ -1,4 +1,3 @@
-from .tag import Tag
 # ========== CATEGORY REQUEST =========
 from .category import Category
 

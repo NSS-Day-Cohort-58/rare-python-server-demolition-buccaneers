@@ -12,7 +12,7 @@ from .comment_requests import get_all_comments
 from .post_reactions_requests import get_all_post_reactions
 
 # ========== POST_TAG REQUEST =========
-from .post_tag_requests import get_all_posttags, get_single_posttag, create_posttag, delete_posttag, update_posttag
+from .post_tag_requests import get_all_post_tags, get_single_post_tag, create_posttag, delete_posttag, update_posttag
 
 # ========== REACTIONS REQUEST =========
 from .reaction_requests import get_all_reactions

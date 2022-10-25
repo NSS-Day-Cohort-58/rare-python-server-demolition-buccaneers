@@ -5,6 +5,7 @@ from views import get_all_posts, get_single_post, create_post, update_post, dele
 from views import get_all_categories, get_single_category, delete_category, update_category
 from views import get_all_subscriptions, get_single_subscription, create_subscription, delete_subscription, update_subscription
 from views.user_requests import create_user, login_user
+from views import get_all_post_tags, get_single_post_tag
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -30,6 +31,12 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = get_single_post(id)
                 else:
                     response = get_all_posts()
+            
+            if resource == "post_tags":
+                if id is not None:
+                    response = get_single_post_tag(id)
+                else:
+                    response = get_all_post_tags()
 
         self.wfile.write(json.dumps(response).encode())
 

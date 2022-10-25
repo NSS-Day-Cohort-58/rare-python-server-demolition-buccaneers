@@ -131,7 +131,7 @@ def get_single_post(id):
             a.image_url,
             a.content,
             a.approved
-        FROM post a
+        FROM Posts a
         WHERE a.id = ?
         """, (id, ))
 
