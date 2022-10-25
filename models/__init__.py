@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 from .tag import Tag
-=======
 # ========== CATEGORY REQUEST =========
 from .category import Category
 
@@ -30,4 +28,3 @@ from .tag import Tag
 
 # ========== USER REQUEST =========
 from .user import User
->>>>>>> main

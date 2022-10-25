@@ -81,7 +81,7 @@ def create_posttag(new_posttag):
             """
                  SELECT * FROM PostTag ORDER BY id DESC;
         """,
-            (new_posttag["label"]),
+            (new_posttag["post_id"]), (new_posttag["tag_id"])
         )
 
         # The `lastrowid` property on the cursor will return
@@ -103,7 +103,7 @@ def delete_posttag(id):
 
         db_cursor.execute(
             """
-        DELETE FROM post
+        DELETE FROM PostTag
         WHERE id = ?
         """,
             (id,),
@@ -118,11 +118,14 @@ def update_posttag(id, new_posttag):
             """
         UPDATE Tag
             SET
-                label = ?
+                post_id = ?,
+                tag_id = ?
+
         WHERE id = ?
         """,
             (
-                new_posttag["label"],
+                new_posttag["post_id"],
+                new_posttag["tag_id"],
                 id,
             ),
         )
