@@ -2,51 +2,6 @@ import sqlite3
 import json
 from models import Post, User, Category
 
-POSTS = [
-    {
-        # Test data for posts
-        "id": 1,
-        "user_id": 1,
-        "category_id": 1,
-        "title": "test 1",
-        # need to check if the publication date is correct
-        "publication_date": 4,
-        "image_url": "https://www.theedadvocate.org/wp-content/uploads/2016/02/board-361516_960_720-660x400.jpg",
-        "content": "test content 1",
-        # need to check if this is the correct way to
-        # have a boolean in this object
-        "approved": "true",
-    },
-    {
-        # Test data for posts
-        "id": 2,
-        "user_id": 1,
-        "category_id": 1,
-        "title": "test 2",
-        # need to check if the publication date is correct
-        "publication_date": 4,
-        "image_url": "https://www.theedadvocate.org/wp-content/uploads/2016/02/board-361516_960_720-660x400.jpg",
-        "content": "test content 1",
-        # need to check if this is the correct way to
-        # have a boolean in this object
-        "approved": "true",
-    },
-    {
-        # Test data for posts
-        "id": 3,
-        "user_id": 1,
-        "category_id": 1,
-        "title": "Test 3",
-        # need to check if the publication date is correct
-        "publication_date": 4,
-        "image_url": "https://www.theedadvocate.org/wp-content/uploads/2016/02/board-361516_960_720-660x400.jpg",
-        "content": "test content 1",
-        # need to check if this is the correct way to
-        # have a boolean in this object
-        "approved": "true",
-    },
-]
-
 
 def get_all_posts():
     # Open a connection to the database
@@ -96,32 +51,15 @@ def get_all_posts():
         for row in dataset:
 
             # Create an post instance from the current row
-            post = Post(
-                row["id"],
-                row["user_id"],
-                row["category_id"],
-                row["title"],
-                row["publication_date"],
-                row["image_url"],
-                row["content"],
-                row["approved"],
-            )
+            post = Post(row['id'], row['user_id'], row['category_id'], row['title'],
+                        row['publication_date'], row['image_url'], row['content'], row['approved'])
 
             # Create a Users and Categories instance from the current row
-            user = User(
-                row["id"],
-                row["first_name"],
-                row["last_name"],
-                row["email"],
-                row["bio"],
-                row["username"],
-                row["password"],
-                row["profile_image_url"],
-                row["created_on"],
-                row["active"],
-            )
+            user = User(row['id'], row['first_name'], row['last_name'], row['email'],
+                        row['bio'], row['username'], row['password'], row['profile_image_url'],
+                        row['created_on'], row['active'])
 
-            category = Category(row["id"], row["label"])
+            category = Category(row['id'], row['label'])
 
             # Add the dictionary representation of the post to the list
             post.user = user.__dict__
@@ -149,7 +87,7 @@ def get_single_post(id):
             a.image_url,
             a.content,
             a.approved
-        FROM post a
+        FROM Posts a
         WHERE a.id = ?
         """,
             (id,),
@@ -177,9 +115,8 @@ def create_post(new_post):
     with sqlite3.connect("./db.sqlite3") as conn:
         db_cursor = conn.cursor()
 
-        db_cursor.execute(
-            """
-        INSERT INTO post
+        db_cursor.execute("""
+        INSERT INTO Posts
             ( user_id, category_id, title, publication_date, image_url, content, approved )
         VALUES
             ( ?, ?, ?, ?, ?, ?, ?);
@@ -212,9 +149,8 @@ def delete_post(id):
     with sqlite3.connect("./db.sqlite3") as conn:
         db_cursor = conn.cursor()
 
-        db_cursor.execute(
-            """
-        DELETE FROM post
+        db_cursor.execute("""
+        DELETE FROM Posts
         WHERE id = ?
         """,
             (id,),
@@ -225,9 +161,8 @@ def update_post(id, new_post):
     with sqlite3.connect("./db.sqlite3") as conn:
         db_cursor = conn.cursor()
 
-        db_cursor.execute(
-            """
-        UPDATE post
+        db_cursor.execute("""
+        UPDATE Posts
             SET
                 user_id = ?,
                 category_id = ?,
@@ -237,16 +172,8 @@ def update_post(id, new_post):
                 content = ?,
                 approved = ?
         WHERE id = ?
-        """,
-            (
-                new_post["name"],
-                new_post["breed"],
-                new_post["status"],
-                new_post["locationId"],
-                new_post["customerId"],
-                id,
-            ),
-        )
+        """, (new_post['user_id'], new_post['category_id'],
+              new_post['title'], new_post['publication_date'], id, ))
 
         # Were any rows affected?
         # Did the client send an `id` that exists?
