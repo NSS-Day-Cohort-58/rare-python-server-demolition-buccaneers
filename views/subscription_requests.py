@@ -1,11 +1,10 @@
 import sqlite3
 import json
-from models import Subscription
+from models import Subscription, User
 
 SUBSCRIPTIONS = [
     # ? Test data for subscription
-    {"id": 1, "follower_id": 1, "author_id": 1,
-        "created_on": 1666627368, "user": 1}
+    {"id": 1, "follower_id": 1, "author_id": 1, "created_on": 1666627368, "user": 1}
 ]
 
 
@@ -36,7 +35,7 @@ def get_all_subscriptions():
             u.profile_image_url profile_image_url,
             u.created_on created_on,
             u.active active
-        FROM subscription s
+        FROM Subscriptions s
         JOIN Users u
             ON u.id = s.user_id
         """
@@ -58,8 +57,20 @@ def get_all_subscriptions():
                 row["author_id"],
                 row["created_on"],
             )
-
+            user = User(
+                row["id"],
+                row["first_name"],
+                row["last_name"],
+                row["email"],
+                row["bio"],
+                row["username"],
+                row["password"],
+                row["profile_image_url"],
+                row["created_on"],
+                row["active"],
+            )
             # Add the dictionary representation of the subscription to the list
+            subscriptions.user = user.__dict__
             subscriptions.append(subscription.__dict__)
 
     return subscriptions
