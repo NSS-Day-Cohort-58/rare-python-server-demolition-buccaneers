@@ -296,3 +296,52 @@ SELECT * FROM Users
 UPDATE Users
 SET first_name = 'Franklin'
 WHERE id =1
+
+INSERT INTO Subscriptions (
+    'id', 
+    'follower_id', 
+    'author_id', 
+    'created_on'
+  )
+VALUES(
+    1, 
+    2, 
+    3, 
+    1666641591
+  )
+INSERT INTO Subscriptions (
+    'id', 
+    'follower_id', 
+    'author_id', 
+    'created_on'
+  )
+VALUES(
+    2, 
+    4, 
+    5, 
+    1666641592
+  )
+INSERT INTO Subscriptions (
+    'id', 
+    'follower_id', 
+    'author_id', 
+    'created_on'
+  )
+VALUES(
+    3, 
+    6, 
+    7, 
+    1666641593
+  )
+INSERT INTO Subscriptions (
+    'id', 
+    'follower_id', 
+    'author_id', 
+    'created_on'
+  )
+VALUES(
+    4, 
+    8, 
+    9,
+    1666641594
+  )

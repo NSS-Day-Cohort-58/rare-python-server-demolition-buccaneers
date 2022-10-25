@@ -26,8 +26,19 @@ def get_all_subscriptions():
             s.author_id,
             s.created_on,
             s.publication_date,
-            s.user,
+            s.user_id,
+            u.first_name first_name,
+            u.last_name last_name,
+            u.email email,
+            u.bio bio,
+            u.username username,
+            u.password password,
+            u.profile_image_url profile_image_url,
+            u.created_on created_on,
+            u.active active,
         FROM subscription s
+        JOIN Users u
+            ON u.id = s.user_id
         """
         )
 
