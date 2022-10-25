@@ -142,16 +142,14 @@ def update_post(id, new_post):
         db_cursor.execute("""
         UPDATE Posts
             SET
-                user_id = ?,
                 category_id = ?,
                 title = ?,
-                publication_date = ?,
                 image_url = ?,
-                content = ?,
-                approved = ?
+                content = ?
         WHERE id = ?
-        """, (new_post['user_id'], new_post['category_id'],
-              new_post['title'], new_post['publication_date'], id, ))
+        """, (new_post['category_id'],
+              new_post['title'], new_post['image_url'],
+              new_post['content'], id, ))
 
         # Were any rows affected?
         # Did the client send an `id` that exists?
