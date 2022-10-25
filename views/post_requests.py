@@ -93,8 +93,22 @@ def get_single_post(id):
             a.publication_date,
             a.image_url,
             a.content,
-            a.approved
+            a.approved,
+            u.first_name first_name,
+            u.last_name last_name,
+            u.email email,
+            u.bio bio,
+            u.username username,
+            u.password password,
+            u.profile_image_url profile_image_url,
+            u.created_on created_on,
+            u.active active,
+            c.label label
         FROM Posts a
+        JOIN Users u
+            ON u.id = a.user_id
+        JOIN Categories c
+            ON c.id = a.category_id
         WHERE a.id = ?
         """,
             (id,),
@@ -114,7 +128,22 @@ def get_single_post(id):
             data["content"],
             data["approved"],
         )
+        user = User(
+            data["id"],
+            data["first_name"],
+            data["last_name"],
+            data["email"],
+            data["bio"],
+            data["username"],
+            data["password"],
+            data["profile_image_url"],
+            data["created_on"],
+            data["active"],
+        )
+        category = Category(data["id"], data["label"])
 
+        post.user = user.__dict__
+        post.category = category.__dict__
         return post.__dict__
 
 
@@ -183,7 +212,6 @@ def update_post(id, new_post):
         """, (new_post['category_id'],
               new_post['title'], new_post['image_url'],
               new_post['content'], id, ))
-
 
         # Were any rows affected?
         # Did the client send an `id` that exists?

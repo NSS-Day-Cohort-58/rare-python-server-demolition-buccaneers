@@ -3,6 +3,7 @@ from .category_requests import get_all_categories
 from .category_requests import get_single_category
 from .category_requests import delete_category
 from .category_requests import update_category
+# from .category_requests import create_category
 
 # ========== COMMENT REQUEST ==========
 from .comment_requests import get_all_comments

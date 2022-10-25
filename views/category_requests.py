@@ -12,7 +12,7 @@ def get_all_categories():
         SELECT
             c.id,
             c.label
-        FROM Category c
+        FROM Categories c
         """)
 
         categories = []
@@ -23,7 +23,7 @@ def get_all_categories():
             category = Category(row['id'], row['label'])
             categories.append(category.__dict__)
 
-        return json.dumps(categories)
+        return categories
 
 
 def get_single_category(id):
@@ -35,7 +35,7 @@ def get_single_category(id):
         SELECT
             c.id,
             c.label
-        FROM Category c
+        FROM Categories c
         WHERE c.id = ?
         """, (id, ))
 
@@ -45,13 +45,42 @@ def get_single_category(id):
 
         return category.__dict__
 
+# getting the error ProgrammingError: Incorrect number of bindings supplied.
+# The current statement uses 1, and there are 10 supplied.
+# def create_category(new_category):
+#     with sqlite3.connect("./db.sqlite3") as conn:
+#         db_cursor = conn.cursor()
+
+#         db_cursor.execute(
+#             """
+#         INSERT INTO Categories
+#             ( label )
+#         VALUES
+#             (?);
+#         """,
+#             (
+#                 new_category["label"]
+#             )
+#         )
+#         # The `lastrowid` property on the cursor will return
+#         # the primary key of the last thing that got added to
+#         # the database.
+#         id = db_cursor.lastrowid
+
+#         # Add the `id` property to the post dictionary that
+#         # was sent by the client so that the client sees the
+#         # primary key in the response.
+#         new_category["id"] = id
+
+#     return new_category
+
 
 def delete_category(id):
     with sqlite3.connect("./db.sqlite3") as conn:
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
-        DELETE FROM category
+        DELETE FROM Categories
         WHERE id = ?
         """, (id, ))
 
@@ -61,7 +90,7 @@ def update_category(id, new_category):
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
-        UPDATE category
+        UPDATE Categories
             SET
                 label = ?
         WHERE id = ?

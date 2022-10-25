@@ -7,6 +7,7 @@ from views import (
     get_single_category,
     delete_category,
     update_category,
+    # create_category,
 )
 from views import (
     get_all_subscriptions,
@@ -48,11 +49,16 @@ class HandleRequests(BaseHTTPRequestHandler):
                 else:
                     response = get_all_subscriptions()
 
+            elif resource == "categories":
+                if id is not None:
+                    response = get_single_category(id)
+                else:
+                    response = get_all_categories()
+
         self.wfile.write(json.dumps(response).encode())
 
+    # ========== POST REQUEST =========
 
-
-    #========== POST REQUEST =========
     def do_POST(self):
         """Make a post request to the server"""
         self._set_headers(201)
@@ -73,11 +79,14 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = create_post(post_body)
             # Encode the new post and send in response
 
+        # currently not working
+        # if resource == "categories":
+        #     response = create_category(post_body)
+
         if resource == "subscriptions":
             response = create_subscription(post_body)
-            
-        self.wfile.write(response.encode())
 
+        self.wfile.write(response.encode())
 
         self.wfile.write(json.dumps(new_post).encode())
 
@@ -98,6 +107,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             success = update_post(id, post_body)
         elif resource == "subscriptions":
             success = update_subscription(id, post_body)
+        elif resource == "categories":
+            success = update_category(id, post_body)
         if success:
             self._set_headers(204)
         else:
@@ -120,6 +131,9 @@ class HandleRequests(BaseHTTPRequestHandler):
             delete_post(id)
         elif resource == "subscriptions":
             delete_subscription(id)
+
+        elif resource == "categories":
+            delete_category(id)
         # Encode the new post and send in response
         self.wfile.write("".encode())
 
