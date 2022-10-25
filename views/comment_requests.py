@@ -70,3 +70,52 @@ def get_all_comments():
             comments.append(comment.__dict__)
 
     return comments
+
+def get_comments_by_post(post):
+
+    with sqlite3.connect("./kennel.sqlite3") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        # Write the SQL query to get the information you want
+        db_cursor.execute("""
+        SELECT
+            m.id,
+            m.post_id,
+            m.author_id,
+            m.content
+        FROM Comments m
+        WHERE m.post_id = ?
+        """, (post, ))
+
+        comments = []
+        dataset = db_cursor.fetchall()
+
+        for row in dataset:
+            comment = Comment(row['id'], row['post_id'], row['author_id'], row['content'])
+            comments.append(comment.__dict__)
+    return comments
+
+def add_comment():
+    # Open a connection to the database
+    with sqlite3.connect("./db.sqlite3") as conn:
+
+        # Just use these. It's a Black Box.
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        INSERT INTO Posts (
+        'id', 
+        'user_id', 
+        'category_id', 
+        'title', 
+        'publication_date', 
+        'image_url', 
+        'content', 
+        'approved'
+        """
+        
+    )
+
+

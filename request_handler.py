@@ -5,7 +5,7 @@ from views import get_all_posts, get_single_post, create_post, update_post, dele
 from views import get_all_categories, get_single_category, delete_category, update_category
 from views import get_all_subscriptions, get_single_subscription, create_subscription, delete_subscription, update_subscription
 from views.user_requests import create_user, login_user
-from views import get_all_comments
+from views import get_all_comments, get_comments_by_post
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -33,8 +33,17 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = get_all_posts()
             
             if resource == "comments":
+                # if id is not None:
+                #     response = 
                 response = get_all_comments()
 
+
+            else: #There is a ? in the path, run the query param functions
+                (resource, query) = parsed
+
+                # See if the query dictionary has a post ID
+                if query.get('post_id') and resource == 'comments':
+                    response = get_comments_by_post(query['post_id'][0])
         self.wfile.write(json.dumps(response).encode())
 
 
