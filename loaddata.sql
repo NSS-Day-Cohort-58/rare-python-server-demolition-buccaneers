@@ -266,6 +266,19 @@ VALUES(
     'approved'
     )
 
+
+INSERT INTO Comments (
+    'id',
+    'post_id',
+    'author_id',
+    'content')
+VALUES (
+    '1',
+    '1',
+    '1',
+    'I agree! This anime is so cool.')
+
+
 SELECT
     a.id,
     a.user_id,
@@ -297,6 +310,14 @@ UPDATE Users
 SET first_name = 'Franklin'
 WHERE id =1
 
+<<<<<<< HEAD
+SELECT
+  m.id,
+  m.post_id,
+  m.author_id,
+  m.content,
+  a.id,
+=======
 
 
 INSERT INTO Subscriptions (
@@ -369,6 +390,7 @@ VALUES(
     'approved'
   )
 SELECT a.id,
+>>>>>>> main
   a.user_id,
   a.category_id,
   a.title,
@@ -384,6 +406,16 @@ SELECT a.id,
   u.password password,
   u.profile_image_url profile_image_url,
   u.created_on created_on,
+<<<<<<< HEAD
+  u.active active
+FROM Comments m
+JOIN Posts a
+  ON a.id = m.post_id
+JOIN Users u
+  ON u.id = m.author_id
+
+SELECT * FROM Comments
+=======
   u.active active,
   c.label category_label
 FROM Posts a
@@ -394,3 +426,4 @@ FROM Users
 UPDATE Users
 SET first_name = 'Franklin'
 WHERE id = 1
+>>>>>>> main
