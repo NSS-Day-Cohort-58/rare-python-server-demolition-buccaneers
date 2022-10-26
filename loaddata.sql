@@ -108,19 +108,8 @@ VALUES (
     'http://dummyimage.com/145x100.png/dddddd/000000',
     '4/27/2022',
     'true'
-  );
-INSERT INTO Users (
-    'first_name',
-    'last_name',
-    'email',
-    'bio',
-    'username',
-    'password',
-    'profile_image_url',
-    'created_on',
-    'active'
-  )
-VALUES (
+  ),
+  (
     'Amandi',
     'Sanson',
     'asanson1@bigcartel.com',
@@ -130,19 +119,8 @@ VALUES (
     'http://dummyimage.com/145x100.png/dddddd/000000',
     '12/29/2021',
     'true'
-  );
-INSERT INTO Users (
-    'first_name',
-    'last_name',
-    'email',
-    'bio',
-    'username',
-    'password',
-    'profile_image_url',
-    'created_on',
-    'active'
-  )
-VALUES (
+  ),
+  (
     'Jerrie',
     'Voas',
     'jvoas2@elpais.com',
@@ -152,19 +130,8 @@ VALUES (
     'http://dummyimage.com/145x100.png/dddddd/000000',
     '12/3/2021',
     'true'
-  );
-INSERT INTO Users (
-    'first_name',
-    'last_name',
-    'email',
-    'bio',
-    'username',
-    'password',
-    'profile_image_url',
-    'created_on',
-    'active'
-  )
-VALUES (
+  ), 
+  (
     'Trula',
     'Sancroft',
     'tsancroft3@taobao.com',
@@ -174,19 +141,8 @@ VALUES (
     'http://dummyimage.com/145x100.png/dddddd/000000',
     '6/8/2022',
     'true'
-  );
-INSERT INTO Users (
-    'first_name',
-    'last_name',
-    'email',
-    'bio',
-    'username',
-    'password',
-    'profile_image_url',
-    'created_on',
-    'active'
-  )
-VALUES (
+  ),
+  (
     'Elena',
     'Grisewood	',
     'egrisewood4@constantcontact.com',
@@ -196,25 +152,11 @@ VALUES (
     'http://dummyimage.com/145x100.png/dddddd/000000',
     '7/28/2022',
     'true'
-  );
+  )
 
 
 INSERT INTO Categories ('label')
-VALUES('Horror');
-INSERT INTO Categories ('label')
-VALUES('Fantasy');
-INSERT INTO Categories ('label')
-VALUES('Anime');
-INSERT INTO Categories ('label')
-VALUES('Gaming');
-INSERT INTO Categories ('label')
-VALUES('Crime');
-INSERT INTO Categories ('label')
-VALUES('Classic');
-INSERT INTO Categories ('label')
-VALUES('Historical');
-INSERT INTO Categories ('label')
-VALUES('Fairy Tale');
+VALUES('Horror'), ('Fantasy'), ('Anime'), ('Gaming'), ('Crime'), ('Classic'), ('Historical'), ('Fairy Tale')
 
 
 
@@ -291,7 +233,6 @@ UPDATE Users
 SET first_name = 'Franklin'
 WHERE id =1
 
-<<<<<<< HEAD
 
 INSERT INTO PostTags (
   'id',
@@ -309,15 +250,13 @@ SELECT
   pt.post_id,
   pt.tag_id,
   a.id,
-=======
-<<<<<<< HEAD
+
 SELECT
   m.id,
   m.post_id,
   m.author_id,
   m.content,
   a.id,
-=======
 
 
 INSERT INTO Subscriptions (
@@ -331,38 +270,20 @@ VALUES(
     2, 
     3, 
     1666641591
-  )
-INSERT INTO Subscriptions (
-    'id', 
-    'follower_id', 
-    'author_id', 
-    'created_on'
-  )
-VALUES(
+  ),
+  (
     2, 
     4, 
     5, 
     1666641592
-  )
-INSERT INTO Subscriptions (
-    'id', 
-    'follower_id', 
-    'author_id', 
-    'created_on'
-  )
-VALUES(
+  ),
+  (
     3, 
     6, 
     7, 
     1666641593
-  )
-INSERT INTO Subscriptions (
-    'id', 
-    'follower_id', 
-    'author_id', 
-    'created_on'
-  )
-VALUES(
+  ),
+  (
     4, 
     8, 
     9,
@@ -389,9 +310,8 @@ VALUES(
     'the show is good',
     'approved'
   )
+
 SELECT a.id,
->>>>>>> main
->>>>>>> main
   a.user_id,
   a.category_id,
   a.title,
@@ -399,7 +319,6 @@ SELECT a.id,
   a.image_url,
   a.content,
   a.approved,
-<<<<<<< HEAD
   t.id,
   t.label
 FROM PostTags pt
@@ -410,8 +329,6 @@ JOIN Tags t
 
 SELECT *
 FROM PostTags
-
-=======
   u.first_name first_name,
   u.last_name last_name,
   u.email email,
@@ -420,7 +337,6 @@ FROM PostTags
   u.password password,
   u.profile_image_url profile_image_url,
   u.created_on created_on,
-<<<<<<< HEAD
   u.active active
 FROM Comments m
 JOIN Posts a
@@ -429,16 +345,16 @@ JOIN Users u
   ON u.id = m.author_id
 
 SELECT * FROM Comments
-=======
   u.active active,
   c.label category_label
 FROM Posts a
   JOIN Users u ON u.id = a.user_id
   JOIN Categories c ON c.id = a.category_id
+
 SELECT *
 FROM Users
+
 UPDATE Users
 SET first_name = 'Franklin'
 WHERE id = 1
->>>>>>> main
->>>>>>> main
+
