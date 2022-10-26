@@ -5,7 +5,7 @@ from views import get_all_posts, get_single_post, create_post, update_post, dele
 from views import get_all_categories, get_single_category, delete_category, update_category
 from views import get_all_subscriptions, get_single_subscription, create_subscription, delete_subscription, update_subscription
 from views.user_requests import create_user, login_user
-from views import get_all_post_tags, get_single_post_tag
+from views import get_all_post_tags, get_single_post_tag, update_post_tag, create_post_tag, delete_post_tag
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -43,29 +43,33 @@ class HandleRequests(BaseHTTPRequestHandler):
 
     
 
-# ========== POST REQUEST =========
-    # def do_POST(self):
-    #     """Make a post request to the server"""
-    #     self._set_headers(201)
-    #     content_len = int(self.headers.get('content-length', 0))
-    #     post_body = json.loads(self.rfile.read(content_len))
-    #     response = ''
-    #     resource, _ = self.parse_url()
+#========== POST REQUEST =========
+    def do_POST(self):
+        """Make a post request to the server"""
+        self._set_headers(201)
+        content_len = int(self.headers.get('content-length', 0))
+        post_body = json.loads(self.rfile.read(content_len))
+        response = ''
+        resource, _ = self.parse_url(self.path)
 
-    #     new_post = None
+        new_post = None
+        new_post_tags = None
+        if resource == 'login':
+            response = login_user(post_body)
 
-    #     if resource == 'login':
-    #         response = login_user(post_body)
+        elif resource == 'register':
+            response = create_user(post_body)
 
-    #     if resource == 'register':
-    #         response = create_user(post_body)
+        elif resource == "posts":
+            new_post = create_post(post_body)
+            # Encode the new post and send in response
+            self.wfile.write(json.dumps(new_post).encode())
+        
+        elif resource == "post_tags":
+            new_post_tags= create_post_tag(post_body)
+            self.wfile.write(json.dumps(new_post_tags).encode())
 
-    #     if resource == "posts":
-    #         new_post = create_post(post_body)
-    #         # Encode the new post and send in response
-    #         self.wfile.write(json.dumps(new_post).encode())
-
-    #     self.wfile.write(response.encode())
+        self.wfile.write(response.encode())
 
 
 # ========== PUT REQUEST =========
@@ -83,6 +87,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "posts":
             success = update_post(id, post_body)
+
+        elif resource == "post_tags":
+            success = update_post_tag(id, post_body)
 
         if success:
             self._set_headers(204)
@@ -105,6 +112,9 @@ class HandleRequests(BaseHTTPRequestHandler):
     # Delete a single post from the list
         if resource == "posts":
             delete_post(id)
+        
+        elif resource == "post_tags":
+            delete_post_tag(id)
 
     # Encode the new post and send in response
         self.wfile.write("".encode())

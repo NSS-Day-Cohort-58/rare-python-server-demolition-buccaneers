@@ -219,31 +219,12 @@ VALUES('Fairy Tale');
 
 
 INSERT INTO Tags ('label')
-VALUES('Horror');
-INSERT INTO Tags ('label')
-VALUES('Fantasy');
-INSERT INTO Tags ('label')
-VALUES('Anime');
-INSERT INTO Tags ('label')
-VALUES('Gaming');
-INSERT INTO Tags ('label')
-VALUES('Classical');
-INSERT INTO Tags ('label')
-VALUES('Historical');
-INSERT INTO Tags ('label')
-VALUES('Fairy Tale');
+VALUES('Horror'), ('Fantasy'), ('Anime'), ('Gaming'), ('Classical'), ('Historical'), ('Fairy Tale');
 
 
 INSERT INTO Reactions ('label', 'image_url')
-VALUES('Sad', 'https://pngtree.com/so/sad')
-INSERT INTO Reactions ('label', 'image_url')
-VALUES('excited', 'https://pngtree.com/so/excited')
-INSERT INTO Reactions ('label', 'image_url')
-VALUES('angry', 'https://pngtree.com/so/angry')
-INSERT INTO Reactions ('label', 'image_url')
-VALUES('love', 'https://pngtree.com/so/love')
-INSERT INTO Reactions ('label', 'image_url')
-VALUES('wink', 'https://pngtree.com/so/wink')
+VALUES('Sad', 'https://pngtree.com/so/sad'), ('excited', 'https://pngtree.com/so/excited'), ('angry', 'https://pngtree.com/so/angry'),
+('love', 'https://pngtree.com/so/love'), ('wink', 'https://pngtree.com/so/wink')
 
 INSERT INTO Posts (
     'id', 
