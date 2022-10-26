@@ -12,16 +12,12 @@ def get_all_tags():
         db_cursor = conn.cursor()
 
         # Write the SQL query to get the information you want
-        db_cursor.execute(
-            """
-                      SELECT
-                        t.id,
-                        t.label
-                       
-
-                    FROM Tag t
-                   
-                        """
+        db_cursor.execute("""
+            SELECT
+                t.id,
+                t.label
+            FROM Tag t
+        """
         )
 
         # Initialize an empty list to hold all tag representations
@@ -43,7 +39,7 @@ def get_all_tags():
 
 
 def get_single_tag(id):
-    with sqlite3.connect(".db.sqlite3") as conn:
+    with sqlite3.connect("./db.sqlite3") as conn:
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
 
