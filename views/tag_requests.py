@@ -16,7 +16,8 @@ def get_all_tags():
             SELECT
                 t.id,
                 t.label
-            FROM Tag t
+            FROM Tags t
+            ORDER BY label ASC
         """
         )
 
@@ -50,11 +51,11 @@ def get_single_tag(id):
                     SELECT
                         t.id,
                         t.label
-                       
-                    FROM Tag t
+                    FROM Tags t
                     WHERE t.id = ?
+                    ORDER BY label ASC
                     """,
-            (id,),
+            (id,)
         )
 
         # Load the single result into memory
@@ -72,9 +73,10 @@ def create_tag(new_tag):
 
         db_cursor.execute(
             """
-                 SELECT * FROM tags ORDER BY id DESC;
+                 INSERT INTO Tags (label)
+                 VALUES (?)
         """,
-            (new_tag["label"]),
+            (new_tag["label"],)
         )
 
         # The `lastrowid` property on the cursor will return
@@ -96,7 +98,7 @@ def delete_tag(id):
 
         db_cursor.execute(
             """
-        DELETE FROM Tag
+        DELETE FROM Tags
         WHERE id = ?
         """,
             (id,),
@@ -109,7 +111,7 @@ def update_tag(id, new_tag):
 
         db_cursor.execute(
             """
-        UPDATE Tag
+        UPDATE Tags
             SET
                 label = ?
         WHERE id = ?

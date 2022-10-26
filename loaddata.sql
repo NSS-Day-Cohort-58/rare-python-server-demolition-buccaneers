@@ -247,6 +247,19 @@ VALUES(
     'approved'
     )
 
+
+INSERT INTO Comments (
+    'id',
+    'post_id',
+    'author_id',
+    'content')
+VALUES (
+    '1',
+    '1',
+    '1',
+    'I agree! This anime is so cool.')
+
+
 SELECT
     a.id,
     a.user_id,
@@ -278,6 +291,7 @@ UPDATE Users
 SET first_name = 'Franklin'
 WHERE id =1
 
+<<<<<<< HEAD
 
 INSERT INTO PostTags (
   'id',
@@ -295,6 +309,89 @@ SELECT
   pt.post_id,
   pt.tag_id,
   a.id,
+=======
+<<<<<<< HEAD
+SELECT
+  m.id,
+  m.post_id,
+  m.author_id,
+  m.content,
+  a.id,
+=======
+
+
+INSERT INTO Subscriptions (
+    'id', 
+    'follower_id', 
+    'author_id', 
+    'created_on'
+  )
+VALUES(
+    1, 
+    2, 
+    3, 
+    1666641591
+  )
+INSERT INTO Subscriptions (
+    'id', 
+    'follower_id', 
+    'author_id', 
+    'created_on'
+  )
+VALUES(
+    2, 
+    4, 
+    5, 
+    1666641592
+  )
+INSERT INTO Subscriptions (
+    'id', 
+    'follower_id', 
+    'author_id', 
+    'created_on'
+  )
+VALUES(
+    3, 
+    6, 
+    7, 
+    1666641593
+  )
+INSERT INTO Subscriptions (
+    'id', 
+    'follower_id', 
+    'author_id', 
+    'created_on'
+  )
+VALUES(
+    4, 
+    8, 
+    9,
+    1666641594
+  )
+
+INSERT INTO Posts (
+    'id',
+    'user_id',
+    'category_id',
+    'title',
+    'publication_date',
+    'image_url',
+    'content',
+    'approved'
+  )
+VALUES(
+    '2',
+    '1',
+    '5',
+    'Chainsawman',
+    '2022-10-24',
+    'https://upload.wikimedia.org/wikipedia/en/2/24/Chainsawman.jpg',
+    'the show is good',
+    'approved'
+  )
+SELECT a.id,
+>>>>>>> main
+>>>>>>> main
   a.user_id,
   a.category_id,
   a.title,
@@ -302,6 +399,7 @@ SELECT
   a.image_url,
   a.content,
   a.approved,
+<<<<<<< HEAD
   t.id,
   t.label
 FROM PostTags pt
@@ -313,3 +411,34 @@ JOIN Tags t
 SELECT *
 FROM PostTags
 
+=======
+  u.first_name first_name,
+  u.last_name last_name,
+  u.email email,
+  u.bio bio,
+  u.username username,
+  u.password password,
+  u.profile_image_url profile_image_url,
+  u.created_on created_on,
+<<<<<<< HEAD
+  u.active active
+FROM Comments m
+JOIN Posts a
+  ON a.id = m.post_id
+JOIN Users u
+  ON u.id = m.author_id
+
+SELECT * FROM Comments
+=======
+  u.active active,
+  c.label category_label
+FROM Posts a
+  JOIN Users u ON u.id = a.user_id
+  JOIN Categories c ON c.id = a.category_id
+SELECT *
+FROM Users
+UPDATE Users
+SET first_name = 'Franklin'
+WHERE id = 1
+>>>>>>> main
+>>>>>>> main

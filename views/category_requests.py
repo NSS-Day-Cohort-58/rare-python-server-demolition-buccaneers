@@ -12,7 +12,7 @@ def get_all_categories():
         SELECT
             c.id,
             c.label
-        FROM Category c
+        FROM Categories c
         """)
 
         categories = []
