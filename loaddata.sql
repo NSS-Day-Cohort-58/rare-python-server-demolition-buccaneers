@@ -354,7 +354,3 @@ FROM Posts a
 SELECT *
 FROM Users
 
-UPDATE Users
-SET first_name = 'Franklin'
-WHERE id = 1
-
