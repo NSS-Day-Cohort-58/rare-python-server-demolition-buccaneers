@@ -108,19 +108,8 @@ VALUES (
     'http://dummyimage.com/145x100.png/dddddd/000000',
     '4/27/2022',
     'true'
-  );
-INSERT INTO Users (
-    'first_name',
-    'last_name',
-    'email',
-    'bio',
-    'username',
-    'password',
-    'profile_image_url',
-    'created_on',
-    'active'
-  )
-VALUES (
+  ),
+  (
     'Amandi',
     'Sanson',
     'asanson1@bigcartel.com',
@@ -130,19 +119,8 @@ VALUES (
     'http://dummyimage.com/145x100.png/dddddd/000000',
     '12/29/2021',
     'true'
-  );
-INSERT INTO Users (
-    'first_name',
-    'last_name',
-    'email',
-    'bio',
-    'username',
-    'password',
-    'profile_image_url',
-    'created_on',
-    'active'
-  )
-VALUES (
+  ),
+  (
     'Jerrie',
     'Voas',
     'jvoas2@elpais.com',
@@ -152,19 +130,8 @@ VALUES (
     'http://dummyimage.com/145x100.png/dddddd/000000',
     '12/3/2021',
     'true'
-  );
-INSERT INTO Users (
-    'first_name',
-    'last_name',
-    'email',
-    'bio',
-    'username',
-    'password',
-    'profile_image_url',
-    'created_on',
-    'active'
-  )
-VALUES (
+  ), 
+  (
     'Trula',
     'Sancroft',
     'tsancroft3@taobao.com',
@@ -174,19 +141,8 @@ VALUES (
     'http://dummyimage.com/145x100.png/dddddd/000000',
     '6/8/2022',
     'true'
-  );
-INSERT INTO Users (
-    'first_name',
-    'last_name',
-    'email',
-    'bio',
-    'username',
-    'password',
-    'profile_image_url',
-    'created_on',
-    'active'
-  )
-VALUES (
+  ),
+  (
     'Elena',
     'Grisewood	',
     'egrisewood4@constantcontact.com',
@@ -196,54 +152,21 @@ VALUES (
     'http://dummyimage.com/145x100.png/dddddd/000000',
     '7/28/2022',
     'true'
-  );
+  )
 
 
 INSERT INTO Categories ('label')
-VALUES('Horror');
-INSERT INTO Categories ('label')
-VALUES('Fantasy');
-INSERT INTO Categories ('label')
-VALUES('Anime');
-INSERT INTO Categories ('label')
-VALUES('Gaming');
-INSERT INTO Categories ('label')
-VALUES('Crime');
-INSERT INTO Categories ('label')
-VALUES('Classic');
-INSERT INTO Categories ('label')
-VALUES('Historical');
-INSERT INTO Categories ('label')
-VALUES('Fairy Tale');
+VALUES('Horror'), ('Fantasy'), ('Anime'), ('Gaming'), ('Crime'), ('Classic'), ('Historical'), ('Fairy Tale')
 
 
 
 INSERT INTO Tags ('label')
-VALUES('Horror');
-INSERT INTO Tags ('label')
-VALUES('Fantasy');
-INSERT INTO Tags ('label')
-VALUES('Anime');
-INSERT INTO Tags ('label')
-VALUES('Gaming');
-INSERT INTO Tags ('label')
-VALUES('Classical');
-INSERT INTO Tags ('label')
-VALUES('Historical');
-INSERT INTO Tags ('label')
-VALUES('Fairy Tale');
+VALUES('Horror'), ('Fantasy'), ('Anime'), ('Gaming'), ('Classical'), ('Historical'), ('Fairy Tale');
 
 
 INSERT INTO Reactions ('label', 'image_url')
-VALUES('Sad', 'https://pngtree.com/so/sad')
-INSERT INTO Reactions ('label', 'image_url')
-VALUES('excited', 'https://pngtree.com/so/excited')
-INSERT INTO Reactions ('label', 'image_url')
-VALUES('angry', 'https://pngtree.com/so/angry')
-INSERT INTO Reactions ('label', 'image_url')
-VALUES('love', 'https://pngtree.com/so/love')
-INSERT INTO Reactions ('label', 'image_url')
-VALUES('wink', 'https://pngtree.com/so/wink')
+VALUES('Sad', 'https://pngtree.com/so/sad'), ('excited', 'https://pngtree.com/so/excited'), ('angry', 'https://pngtree.com/so/angry'),
+('love', 'https://pngtree.com/so/love'), ('wink', 'https://pngtree.com/so/wink')
 
 INSERT INTO Posts (
     'id', 
@@ -265,6 +188,19 @@ VALUES(
     'the show is good', 
     'approved'
     )
+
+
+INSERT INTO Comments (
+    'id',
+    'post_id',
+    'author_id',
+    'content')
+VALUES (
+    '1',
+    '1',
+    '1',
+    'I agree! This anime is so cool.')
+
 
 SELECT
     a.id,
@@ -298,6 +234,30 @@ SET first_name = 'Franklin'
 WHERE id =1
 
 
+INSERT INTO PostTags (
+  'id',
+  'post_id',
+  'tag_id')
+VALUES
+  (
+  4,
+  1,
+  4
+  )
+
+SELECT
+  pt.id,
+  pt.post_id,
+  pt.tag_id,
+  a.id,
+
+SELECT
+  m.id,
+  m.post_id,
+  m.author_id,
+  m.content,
+  a.id,
+
 
 INSERT INTO Subscriptions (
     'id', 
@@ -310,38 +270,20 @@ VALUES(
     2, 
     3, 
     1666641591
-  )
-INSERT INTO Subscriptions (
-    'id', 
-    'follower_id', 
-    'author_id', 
-    'created_on'
-  )
-VALUES(
+  ),
+  (
     2, 
     4, 
     5, 
     1666641592
-  )
-INSERT INTO Subscriptions (
-    'id', 
-    'follower_id', 
-    'author_id', 
-    'created_on'
-  )
-VALUES(
+  ),
+  (
     3, 
     6, 
     7, 
     1666641593
-  )
-INSERT INTO Subscriptions (
-    'id', 
-    'follower_id', 
-    'author_id', 
-    'created_on'
-  )
-VALUES(
+  ),
+  (
     4, 
     8, 
     9,
@@ -368,6 +310,7 @@ VALUES(
     'the show is good',
     'approved'
   )
+
 SELECT a.id,
   a.user_id,
   a.category_id,
@@ -376,6 +319,16 @@ SELECT a.id,
   a.image_url,
   a.content,
   a.approved,
+  t.id,
+  t.label
+FROM PostTags pt
+JOIN Posts a
+  ON a.id = pt.post_id
+JOIN Tags t
+  ON t.id = pt.tag_id
+
+SELECT *
+FROM PostTags
   u.first_name first_name,
   u.last_name last_name,
   u.email email,
@@ -384,13 +337,24 @@ SELECT a.id,
   u.password password,
   u.profile_image_url profile_image_url,
   u.created_on created_on,
+  u.active active
+FROM Comments m
+JOIN Posts a
+  ON a.id = m.post_id
+JOIN Users u
+  ON u.id = m.author_id
+
+SELECT * FROM Comments
   u.active active,
   c.label category_label
 FROM Posts a
   JOIN Users u ON u.id = a.user_id
   JOIN Categories c ON c.id = a.category_id
+
 SELECT *
 FROM Users
+
 UPDATE Users
 SET first_name = 'Franklin'
 WHERE id = 1
+
