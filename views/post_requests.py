@@ -181,6 +181,42 @@ def create_post(new_post):
     return new_post
 
 
+def get_posts_by_category(category_id):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+    db_cursor.execute("""SELECT
+            a.id,
+            a.user_id,
+            a.category_id,
+            a.title,
+            a.publication_date,
+            a.image_url,
+            a.content,
+            a.approved
+        from Posts a
+        WHERE a.category_id = ?
+        """, (category_id,))
+    posts = []
+    dataset = db_cursor.fetchall()
+
+    for row in dataset:
+        post = Post(
+            row["id"],
+            row["user_id"],
+            row["category_id"],
+            row["title"],
+            row["publication_date"],
+            row["image_url"],
+            row["content"],
+            row["approved"],
+        )
+        posts.append(post.__dict__)
+
+    return posts
+
+
 def delete_post(id):
     with sqlite3.connect("./db.sqlite3") as conn:
         db_cursor = conn.cursor()
