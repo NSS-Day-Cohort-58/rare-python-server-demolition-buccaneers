@@ -4,6 +4,11 @@ from models import Comment, Post, User
 
 
 
+import sqlite3
+import json
+from models import Tag
+
+
 def get_all_comments():
     # Open a connection to the database
     with sqlite3.connect("./db.sqlite3") as conn:

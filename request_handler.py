@@ -2,21 +2,12 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse, parse_qs
 from views import get_all_posts, get_single_post, create_post, update_post, delete_post
-from views import (
-    get_all_categories,
-    get_single_category,
-    delete_category,
-    update_category,
-)
-from views import (
-    get_all_subscriptions,
-    get_single_subscription,
-    create_subscription,
-    delete_subscription,
-    update_subscription,
-)
+from views import get_all_categories, get_single_category, delete_category, update_category
+from views import get_all_subscriptions, get_single_subscription, create_subscription, delete_subscription, update_subscription
 from views.user_requests import create_user, login_user
+from views import get_all_post_tags, get_single_post_tag, update_post_tag, create_post_tag, delete_post_tag
 from views import get_all_comments, get_comments_by_post, create_comment, get_single_comment, delete_comment, update_comment
+from views import get_all_tags, get_single_tag, create_tag, delete_tag, update_tag
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -43,6 +34,12 @@ class HandleRequests(BaseHTTPRequestHandler):
                 else:
                     response = get_all_posts()
             
+            elif resource == "post_tags":
+                if id is not None:
+                    response = get_single_post_tag(id)
+                else:
+                    response = get_all_post_tags()
+
             elif resource == "comments":
                 if id is not None:
                     response = get_single_comment(id)
@@ -57,7 +54,12 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = get_single_subscription(id)
                 else:
                     response = get_all_subscriptions()
-
+            
+            elif resource == "tags":
+                if id is not None:
+                    response = get_single_tag(id)
+                else:
+                    response = get_all_tags()
 
             else: #There is a ? in the path, run the query param functions
                 (resource, query) = parsed
@@ -78,38 +80,39 @@ class HandleRequests(BaseHTTPRequestHandler):
         response = ''
         resource, _ = self.parse_url(self.path)
 
+        new_post = None
+        new_post_tags = None
+        new_comment = None
+        new_tag = None
 
         if resource == 'login':
             response = login_user(post_body)
 
-
-        if resource == 'register':
-            response = create_user(post_body)
-
-            
-        new_post = None
-
-
-        new_comment = None 
-        if resource == "comments":
-            new_comment = create_comment(post_body)
-            self.wfile.write(json.dumps(new_comment).encode())
-
-
-# ========== PUT REQUEST =========
-        if resource == 'register':
+        elif resource == 'register':
             response = create_user(post_body)
 
         elif resource == "posts":
-            response = create_post(post_body)
+            new_post = create_post(post_body)
             # Encode the new post and send in response
-
-        elif resource == "subscriptions":
-            response = create_subscription(post_body)
+            self.wfile.write(json.dumps(new_post).encode())
+        
+        elif resource == "post_tags":
+            new_post_tags= create_post_tag(post_body)
+            self.wfile.write(json.dumps(new_post_tags).encode())
 
         elif resource == "comments":
-            response = create_comment(post_body)
-
+            new_comment = create_comment(post_body)
+            self.wfile.write(json.dumps(new_comment).encode())
+        
+        elif resource == "tags":
+            new_tag = create_tag(post_body)
+            self.wfile.write(json.dumps(new_tag).encode())
+        
+        elif resource == "subscriptions":
+            new_tag = create_subscription(post_body)
+            self.wfile.write(json.dumps(new_tag).encode())
+            
+        
         self.wfile.write(response.encode())
 
 
@@ -133,8 +136,14 @@ class HandleRequests(BaseHTTPRequestHandler):
         elif resource == "subscriptions":
             success = update_subscription(id, post_body)
 
+        elif resource == "post_tags":
+            success = update_post_tag(id, post_body)
+
         elif resource == "comments":
             success = update_comment(id, post_body)
+        
+        elif resource == "tags":
+            success = update_tag(id, post_body)
             
         if success:
             self._set_headers(204)
@@ -157,11 +166,19 @@ class HandleRequests(BaseHTTPRequestHandler):
         if resource == "posts":
             delete_post(id)
         
+        elif resource == "post_tags":
+            delete_post_tag(id)
+
+    # Encode the new post and send in response
         elif resource == "subscriptions":
             delete_subscription(id)
         
         elif resource == "comments":
             delete_comment(id)
+
+        elif resource == "tags":
+            delete_tag(id)
+
         self.wfile.write("".encode())
 
 
